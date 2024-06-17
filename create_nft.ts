@@ -18,9 +18,7 @@ const metaplex = Metaplex.make(connection)
     );
 
 const {uri} = await metaplex.nfts().uploadMetadata({
-    name: "My First Ever Solana NFT",
-    description: "Decription as usual",
-    format: "Unusual field to test metadata",
+    message: "My First Ever Solana NFT",
 })
 
 console.log(uri);

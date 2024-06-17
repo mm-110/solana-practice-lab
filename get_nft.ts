@@ -16,7 +16,7 @@ const metaplex = Metaplex.make(connection)
             timeout: 60000,
         }),
     );
-const mintAddress = new PublicKey("6vyDQfgoZKdZzJsst61F5UciRNQQv8yuEdcDSB6rnxEw")
+const mintAddress = new PublicKey("AsFkm2dgy6ieKtWzbBrxE5uFQQ1LJmPq7JZHUDSmykp4")
 const nft = await metaplex.nfts().findByMint({mintAddress});
 console.log(nft.uri);
 
