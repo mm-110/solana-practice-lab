@@ -10,7 +10,7 @@ const filePath = './publicKey.json';
 const publicKey = loadPublicKeyFromJSON(filePath);
 
 // Define the original message
-const originalMessage = 'Non lo saprai mai';
+const originalMessage = 'Messaggio da criptare';
 
 // Encrypt and decrypt the message using X25519 keys
 const encryptedMessage = encryptWithPublicKey(publicKey, originalMessage);
