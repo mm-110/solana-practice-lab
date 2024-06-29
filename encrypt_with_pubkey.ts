@@ -6,7 +6,7 @@ import { config } from 'dotenv';
 import naclUtil from 'tweetnacl-util';
 import fs from 'fs';
 
-const filePath = './publicKey.json';
+const filePath = './test_data/publicKey.json';
 const publicKey = loadPublicKeyFromJSON(filePath);
 
 // Define the original message
@@ -16,7 +16,7 @@ const originalMessage = 'Messaggio da criptare';
 const encryptedMessage = encryptWithPublicKey(publicKey, originalMessage);
 
 // Save the encrypted message components to a JSON file
-const encryptedMessageFilePath = './encryptedMessage.json';
+const encryptedMessageFilePath = './test_data/encryptedMessage.json';
 fs.writeFileSync(encryptedMessageFilePath, JSON.stringify(encryptedMessage));
 
 console.log('Messaggio originale:', originalMessage);

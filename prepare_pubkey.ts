@@ -16,7 +16,7 @@ const publicKeyJSON = {
 };
 
 // Save the public key to a JSON file
-const publicKeyFilePath = './publicKey.json';
+const publicKeyFilePath = './test_data/publicKey.json';
 fs.writeFileSync(publicKeyFilePath, JSON.stringify(publicKeyJSON, null, 2));
 
 console.log(publicKeyBase64)

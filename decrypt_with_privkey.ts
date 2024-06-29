@@ -10,7 +10,7 @@ const ed25519Seed = extractED25519Seed(wallet);
 const x25519PrivateKey = ed25519ToX25519(ed25519Seed);
 
 // Read the encrypted message components from the JSON file
-const encryptedMessageFilePath = './encryptedMessage.json';
+const encryptedMessageFilePath = './test_data/encryptedMessage.json';
 const encryptedMessageRaw = fs.readFileSync(encryptedMessageFilePath, 'utf8');
 const encryptedMessageObj = JSON.parse(encryptedMessageRaw);
 

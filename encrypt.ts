@@ -2,6 +2,7 @@ import * as web3 from '@solana/web3.js';
 import nacl from 'tweetnacl';
 import naclUtil from 'tweetnacl-util';
 import "dotenv/config";
+import crypto from 'crypto'
 
 // Function to encrypt a message using the recipient's public key
 export function encryptWithPublicKey(publicKey, message) {
@@ -36,4 +37,41 @@ export function decryptWithPrivateKey(privateKey, encryptedMessage) {
   }
 
   return naclUtil.encodeUTF8(decryptedMessage);
+}
+
+// Function to derive a key from the password
+function getKeyFromPassword(password, salt) {
+  return crypto.pbkdf2Sync(password, salt, 100000, 32, 'sha512');
+}
+
+// Function to encrypt data with a password
+export function encryptWithPassword(text, password) {
+  const algorithm = 'aes-256-cbc';
+  const iv = crypto.randomBytes(16);
+  const salt = crypto.randomBytes(16);
+  const key = getKeyFromPassword(password, salt);
+
+  let cipher = crypto.createCipheriv(algorithm, key, iv);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+
+  return {
+      iv: iv.toString('hex'),
+      encryptedData: encrypted,
+      salt: salt.toString('hex')
+  };
+}
+
+// Function to decrypt data with a password
+export function decryptWithPassword(encryptedObj, password) {
+  const algorithm = 'aes-256-cbc';
+  const iv = Buffer.from(encryptedObj.iv, 'hex');
+  const salt = Buffer.from(encryptedObj.salt, 'hex');
+  const key = getKeyFromPassword(password, salt);
+
+  let decipher = crypto.createDecipheriv(algorithm, key, iv);
+  let decrypted = decipher.update(encryptedObj.encryptedData, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+
+  return decrypted;
 }
