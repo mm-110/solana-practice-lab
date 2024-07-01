@@ -1,9 +1,14 @@
-import {Metaplex, keypairIdentity, bundlrStorage } from "@metaplex-foundation/js";
+import {Metaplex, keypairIdentity, irysStorage } from "@metaplex-foundation/js";
 import { Connection, clusterApiUrl, Keypair } from "@solana/web3.js";
 import "dotenv/config";
 import { getKeypairFromEnvironment } from "@solana-developers/helpers";
 import fs from 'fs';
 import { encryptWithPassword } from "./encrypt";
+
+// Ho problemi con bundlrStorage
+// Ho che bundlr was renamed to irys in "@metaplex-foundation/js" 0.19.6
+// You'll have to use irysStorage instead of bundlrStorage, and irys.xyz instead of bundlr.network
+
 
 const connection = new Connection(clusterApiUrl("devnet"));
 const wallet = getKeypairFromEnvironment("SECRET_KEY");
@@ -13,8 +18,8 @@ const password = "aaaa"
 const metaplex = Metaplex.make(connection)
     .use(keypairIdentity(wallet))
     .use(
-        bundlrStorage({
-            address: "https://devnet.bundlr.network",
+        irysStorage({
+            address: "https://devnet.irys.xyz",
             providerUrl: "https://api.devnet.solana.com",
             timeout: 60000,
         }),
@@ -49,7 +54,7 @@ const {nft} = await metaplex.nfts().create(
         sellerFeeBasisPoints: 0,
     },
     {
-        commitment: "finalized"
+        commitment: "confirmed"
     },
 );
 

@@ -8,6 +8,11 @@ const connection = new Connection(clusterApiUrl("devnet"));
 const keypair = getKeypairFromEnvironment("SECRET_KEY");
 console.log(keypair.publicKey.toBase58());
 
+
+// Check the balance of the account
+const balance = await connection.getBalance(keypair.publicKey);
+console.log(`Account balance: ${balance / 1e9} SOL`);
+
 const airdropSignature = await connection.requestAirdrop(
     keypair.publicKey,
     1 * LAMPORTS_PER_SOL
