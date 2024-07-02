@@ -25,5 +25,7 @@ const x25519PrivateKey = ed25519ToX25519(ed25519Seed);
 const x25519PublicKey = nacl.scalarMult.base(x25519PrivateKey);
 
 console.log(x25519PublicKey);
+// Aggiunto per vedere la public key del wallet in .env
+console.log(wallet.publicKey);
 
 // console.log(typeof x25519PublicKey);
