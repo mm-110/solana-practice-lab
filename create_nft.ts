@@ -1,5 +1,5 @@
-import {Metaplex, keypairIdentity, irysStorage } from "@metaplex-foundation/js";
-import { Connection, clusterApiUrl, Keypair } from "@solana/web3.js";
+import {Metaplex, keypairIdentity, bundlrStorage } from "@metaplex-foundation/js";
+import { Connection, clusterApiUrl, Keypair, PublicKey } from "@solana/web3.js";
 import "dotenv/config";
 import { getKeypairFromEnvironment } from "@solana-developers/helpers";
 import fs from 'fs';
@@ -18,7 +18,7 @@ const password = "aaaa"
 const metaplex = Metaplex.make(connection)
     .use(keypairIdentity(wallet))
     .use(
-        irysStorage({
+        bundlrStorage({
             address: "https://devnet.irys.xyz",
             providerUrl: "https://api.devnet.solana.com",
             timeout: 60000,
@@ -46,12 +46,17 @@ const encryptedJsonData = encryptJsonData(jsonData, password)
 // Create NFT's metadata
 const {uri} = await metaplex.nfts().uploadMetadata(encryptedJsonData)
 console.log(uri);
+
+
+const owner = new PublicKey("46MxAaTreYTuixjRuQn4JFoVDo4gzLg3dQ2HGHhffn3e");
+
 // Create NFT
 const {nft} = await metaplex.nfts().create(
     {
         uri: uri,
         name: nftName,
         sellerFeeBasisPoints: 0,
+        tokenOwner: owner
     },
     {
         commitment: "confirmed"
@@ -59,3 +64,35 @@ const {nft} = await metaplex.nfts().create(
 );
 
 console.log(nft.address);
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+// SEND NFT
+
+// ... (codice esistente)
+
+// // Chiave pubblica del destinatario (sostituisci con la chiave corretta)
+// const recipientPublicKey = "<inserisci la chiave pubblica del destinatario>";
+
+// // ... (codice esistente)
+
+// // Creazione dell'NFT
+// const { nft } = await metaplex.nfts().create(
+//     {
+//         uri: uri,
+//         name: nftName,
+//         sellerFeeBasisPoints: 0,
+//     },
+//     {
+//         // Aggiungi la chiave pubblica del destinatario
+//         destination: recipientPublicKey,
+//     }
+// );
+
+// console.log("NFT creato con successo:", nft);
+
+// // ... (codice esistente)
+
+
+// 3k9jQqM2QcLzbToXSPGwTApwrq7iimahiAGVHgQUCxtR
